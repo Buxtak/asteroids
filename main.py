@@ -2,11 +2,11 @@ from multiprocessing import Pipe
 
 import pygame
 
+from AsteroidField import *
+from asteroids import *
 from constants import *
 from logger import log_state
 from player import *
-
-# Asteroids project from Boot.dev - Using WSL and ZED
 
 
 def main():
@@ -17,7 +17,17 @@ def main():
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     clock = pygame.time.Clock()
     dt = 60
+    updatable = pygame.sprite.Group()
+    drawable = pygame.sprite.Group()
+    asteroids = pygame.sprite.Group()
+
+    Player.containers = (updatable, drawable)
+    Asteroid.containers = (asteroids, updatable, drawable)
+    AsteroidField.containers = updatable
+
+    asteroidfield = AsteroidField()
     player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+
     while True:
         log_state()
         for event in pygame.event.get():
@@ -27,8 +37,9 @@ def main():
         dt = clock.tick(60) / 1000
 
         screen.fill("black")
-        player.update(dt)
-        player.draw(screen)
+        updatable.update(dt)
+        for i in drawable:
+            i.draw(screen)
         pygame.display.flip()
 
 

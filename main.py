@@ -1,3 +1,4 @@
+import sys
 from multiprocessing import Pipe
 
 import pygame
@@ -5,7 +6,7 @@ import pygame
 from AsteroidField import *
 from asteroids import *
 from constants import *
-from logger import log_state
+from logger import log_event, log_state
 from player import *
 
 
@@ -38,6 +39,12 @@ def main():
 
         screen.fill("black")
         updatable.update(dt)
+        for i in asteroids:
+            if i.collides_with(player):
+                log_event("player_hit")
+                print("Game over!")
+                sys.exit()
+
         for i in drawable:
             i.draw(screen)
         pygame.display.flip()

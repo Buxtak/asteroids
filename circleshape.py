@@ -1,11 +1,3 @@
-"""
-Code provided by the lesson.
-"Throughout this project, we will provide some of the code for you, like the class below.
-We want you to focus on OOP concepts not the game physics.
-As such, we've pre-written some of the code you'll need, like the CircleShape class below.
-
-"""
-
 import pygame
 
 
@@ -29,3 +21,10 @@ class CircleShape(pygame.sprite.Sprite):
     def update(self, dt):
         # must override
         pass
+
+    # Adding code manually below
+    def collides_with(self, other):
+        distance = self.position.distance_to(other.position)
+        collision_distance = self.radius + other.radius
+        if distance <= collision_distance:
+            return True

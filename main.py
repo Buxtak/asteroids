@@ -58,7 +58,7 @@ def main():
                 if s.collides_with(i):
                     log_event("asteroid_shot")
                     s.kill()
-                    i.kill()
+                    i.split()
 
 
 if __name__ == "__main__":
